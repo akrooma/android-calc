@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void buttonClicked(View view){
-        // If the calc displays an errormessage, then any button acts as C
+        // If the calc displays an error message, then any button acts as C
         if (textViewEntryBox.getText().toString().equals("Error")) {
             textViewEntryBox.setText("0");
             operandLastPressed = false;
@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
             textViewEntryBox.setText(0);
 
         } else if (id == R.id.buttonAdd || id == R.id.buttonSub || id == R.id.buttonMult || id == R.id.buttonDiv) {
-            calculatorEngine.addItem(textViewEntryBox.getText().toString(), button.getText().toString()
-                    , operandLastPressed);
+            textViewEntryBox.setText(calculatorEngine.addItem(textViewEntryBox.getText().toString(),
+                    button.getText().toString(), operandLastPressed));
             operandLastPressed = true;
 
         } else {
@@ -51,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                textViewEntryBox.setText("");
-                textViewEntryBox.append(button.getText().toString());
+                textViewEntryBox.setText(button.getText().toString());
                 operandLastPressed = false;
             }
 
