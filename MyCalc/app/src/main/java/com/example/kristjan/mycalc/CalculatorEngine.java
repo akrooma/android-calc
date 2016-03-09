@@ -7,16 +7,15 @@ import java.util.LinkedList;
  * Created by Kristjan on 08/03/2016.
  */
 public class CalculatorEngine {
-
+    //private LinkedList<Double> stack;
     private DecimalFormat df;
-    private LinkedList<Double> stack;
-    private String operand;
 
+    private String operand;
     private Double x;
     private Double y;
 
     public CalculatorEngine() {
-        stack = new LinkedList<Double>();
+        //stack = new LinkedList<Double>();
         x = null;
         y = null;
         operand = null;
@@ -66,5 +65,29 @@ public class CalculatorEngine {
         x = null;
         y = null;
         operand = null;
+    }
+
+    public String getOperand(){
+        return operand;
+    }
+
+    public Double getX(){
+        return x;
+    }
+
+    public Double getY(){
+        return y;
+    }
+
+    public void setOperand(String input) {
+        operand = input;
+    }
+
+    public void setX(Double input){
+        x = input;
+    }
+
+    public void setY(Double input){
+        y = input;
     }
 }

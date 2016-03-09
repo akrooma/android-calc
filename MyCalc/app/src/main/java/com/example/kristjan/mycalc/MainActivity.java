@@ -8,7 +8,13 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    //private static final String TAG = "MainActivity";
+
+    private static final String STATE_X = "x";
+    private static final String STATE_Y = "y";
+    private static final String STATE_OPERAND = "operand";
+    private static final String STATE_BOOLEAN = "operandLastPressed";
+    private static final String STATE_TEXTVIEW = "textViewEntryBox";
 
     private CalculatorEngine calculatorEngine = new CalculatorEngine();
 
@@ -22,9 +28,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textViewEntryBox = (TextView) findViewById(R.id.textViewEntryBox);
+
+        if (savedInstanceState != null) {
+            calculatorEngine.setOperand(savedInstanceState.getString(STATE_OPERAND));
+            calculatorEngine.setX(savedInstanceState.getDouble(STATE_X));
+            calculatorEngine.setY(savedInstanceState.getDouble(STATE_Y));
+
+            operandLastPressed = savedInstanceState.getBoolean(STATE_BOOLEAN);
+
+            textViewEntryBox.setText(savedInstanceState.getString(STATE_TEXTVIEW));
+        }
     }
-
-
 
     public void buttonClicked(View view){
         Button button = (Button) view;
@@ -66,5 +80,16 @@ public class MainActivity extends AppCompatActivity {
 
             textViewEntryBox.append(button.getText().toString());
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putDouble(STATE_X, calculatorEngine.getX());
+        savedInstanceState.putDouble(STATE_Y, calculatorEngine.getY());
+        savedInstanceState.putString(STATE_OPERAND, calculatorEngine.getOperand());
+        savedInstanceState.putBoolean(STATE_BOOLEAN, operandLastPressed);
+        savedInstanceState.putString(STATE_TEXTVIEW, textViewEntryBox.getText().toString());
+
+        super.onSaveInstanceState(savedInstanceState);
     }
 }
