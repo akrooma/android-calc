@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (id == R.id.buttonAdd || id == R.id.buttonSub || id == R.id.buttonMult || id == R.id.buttonDiv) {
+        if (id == R.id.buttonAdd || id == R.id.buttonSub || id == R.id.buttonMult || id == R.id.buttonDiv || id == R.id.buttonEquals) {
             textViewEntryBox.setText(calculatorEngine.addItem(textViewEntryBox.getText().toString(),
                     button.getText().toString(), operandLastPressed));
             operandLastPressed = true;
@@ -60,10 +60,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             if (operandLastPressed) {
                 if (id == R.id.buttonDot) {
-                    return;
+                    textViewEntryBox.setText("0.");
+                } else {
+                    textViewEntryBox.setText(button.getText().toString());
                 }
 
-                textViewEntryBox.setText(button.getText().toString());
                 operandLastPressed = false;
                 return;
             }

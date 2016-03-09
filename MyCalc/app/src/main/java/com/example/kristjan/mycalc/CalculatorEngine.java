@@ -11,49 +11,68 @@ public class CalculatorEngine {
     private DecimalFormat df;
 
     private String operand;
-    private Double x;
-    private Double y;
+    //private Double x;
+    // Double y;
+
+    private double x;
+    private double y;
 
     public CalculatorEngine() {
         //stack = new LinkedList<Double>();
-        x = null;
-        y = null;
-        operand = null;
+        //x = null;
+        //y = null;
+        x = 0;
+        y = 0;
+        //operand = null;
+        operand = "";
 
         df = new DecimalFormat("######.######");
     }
 
     public String addItem(String input, String operation, boolean anotherOperation){
-        if(operand == null) {
+        if(operand.isEmpty()) {
             x = Double.parseDouble(input);
-            operand = operation;
+
+            if (!operation.equals("=")) {
+                operand = operation;
+            }
+
         } else if (anotherOperation) {
-            operand = operation;
+            if (!operation.equals("=")) {
+                operand = operation;
+            }
+
         } else {
             y = Double.parseDouble(input);
             return calculate(operation);
+
         }
 
         return df.format(x);
         //return df.format(stack.getFirst());
     }
 
-    public void clearStack() {
-
-    }
-
     private String calculate(String newOperation) {
+        if (newOperation.equals("=")) {
+            return calculate("");
+        }
+
         if (operand.equals("+")) {
             x = x + y;
+
         } else if (operand.equals("-")) {
             x = x - y;
+
         } else if (operand.equals("*")) {
             x = x * y;
+
         } else if (operand.equals("/")) {
             if (y == 0) {
                 return "Error";
+
             } else {
                 x = x / y;
+
             }
         }
 
@@ -61,12 +80,17 @@ public class CalculatorEngine {
         return df.format(x);
     }
 
+    // Erases everything from "memory".
     public void clearCalculator() {
-        x = null;
-        y = null;
-        operand = null;
+        //x = null;
+        //y = null;
+        x = 0;
+        y = 0;
+        //operand = null;
+        operand = "";
     }
 
+    // Simple setters and getters.
     public String getOperand(){
         return operand;
     }
