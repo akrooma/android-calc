@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
+
     private CalculatorEngine calculatorEngine = new CalculatorEngine();
 
     private boolean operandLastPressed = false;
@@ -25,22 +27,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void buttonClicked(View view){
-        // If the calc displays an error message, then any button acts as C
-        if (textViewEntryBox.getText().toString().equals("Error")) {
-            textViewEntryBox.setText("0");
-            operandLastPressed = false;
-            return;
-        }
-
         Button button = (Button) view;
         int id = button.getId();
 
-        if (id == R.id.buttonC){
-            calculatorEngine.clearCalculator();
+        // If the calc displays an error message, then any button acts as C
+        if (textViewEntryBox.getText().toString().equals("Error") || id == R.id.buttonC) {
+            textViewEntryBox.setText("0");
             operandLastPressed = false;
-            textViewEntryBox.setText(0);
+            calculatorEngine.clearCalculator();
+            return;
+        }
 
-        } else if (id == R.id.buttonAdd || id == R.id.buttonSub || id == R.id.buttonMult || id == R.id.buttonDiv) {
+        if (id == R.id.buttonAdd || id == R.id.buttonSub || id == R.id.buttonMult || id == R.id.buttonDiv) {
             textViewEntryBox.setText(calculatorEngine.addItem(textViewEntryBox.getText().toString(),
                     button.getText().toString(), operandLastPressed));
             operandLastPressed = true;
@@ -53,9 +51,16 @@ public class MainActivity extends AppCompatActivity {
 
                 textViewEntryBox.setText(button.getText().toString());
                 operandLastPressed = false;
+                return;
             }
 
-            if (textViewEntryBox.getText().toString().equals("0") && id == R.id.button0) {
+            if (textViewEntryBox.getText().toString().equals("0")) {
+                if (id == R.id.button0) {
+                    return;
+                } else if (id != R.id.buttonDot) {
+                    textViewEntryBox.setText("");
+                }
+            } else if (textViewEntryBox.getText().toString().contains(".") && id == R.id.buttonDot) {
                 return;
             }
 
